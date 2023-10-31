@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public Circle lastCircle;
     public GameObject circlePrefab;
     public Transform circleGroup;
+    public List<Circle> circlePool;
+
     public GameObject effectPrefab;
     public Transform effectGroup;
+    public List<ParticleSystem> effectPool;
+
+    public Circle lastCircle;
+    [Range(1, 30)]
+    public int poolSize;            // 오브젝트풀링 Size
+    public int poolCursor;          // 오브젝트풀링 Cursor
 
     public int score;               // 점수
     public int maxLevel;            // Circle 최대 레벨
@@ -17,6 +24,13 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         Application.targetFrameRate = 60;   // 프레임 설정
+        circlePool = new List<Circle>();
+        effectPool = new List<ParticleSystem>();
+
+        for (int index = 0; index < poolSize; index++)
+        {
+            MakeCircle();
+        }
     }
 
     void Start()
@@ -24,18 +38,37 @@ public class GameManager : MonoBehaviour
         NextCircle();
     }
 
-    Circle GetCircle()
+    Circle MakeCircle()
     {
         // Effect 생성
         GameObject instanceEffectObj = Instantiate(effectPrefab, effectGroup);
+        instanceEffectObj.name = "Effect " + effectPool.Count;
         ParticleSystem instanceEffect = instanceEffectObj.GetComponent<ParticleSystem>();
+        effectPool.Add(instanceEffect);
 
         // Circle 생성
         GameObject instanceCircleObj = Instantiate(circlePrefab, circleGroup);
+        instanceEffectObj.name = "Circle " + circlePool.Count;
         Circle instanceCircle = instanceCircleObj.GetComponent<Circle>();
+        instanceCircle.gameManager = this;
         instanceCircle.effect = instanceEffect;
+        circlePool.Add(instanceCircle);
 
         return instanceCircle;
+    }
+
+    Circle GetCircle()
+    {
+        for (int index = 0; index < circlePool.Count; index++)
+        {
+            poolCursor = (poolCursor + 1) % circlePool.Count;
+            if (!circlePool[poolCursor].gameObject.activeSelf)
+            {
+                return circlePool[poolCursor];
+            }
+        }
+
+        return MakeCircle();
     }
 
     void NextCircle()
@@ -45,9 +78,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        Circle newCircle = GetCircle();
-        lastCircle = newCircle;
-        lastCircle.gameManager = this;
+        lastCircle = GetCircle();
         lastCircle.level = Random.Range(0, maxLevel);
         lastCircle.gameObject.SetActive(true);
 
@@ -64,7 +95,6 @@ public class GameManager : MonoBehaviour
 
         NextCircle();
     }
-
 
     public void TouchDown()
     {

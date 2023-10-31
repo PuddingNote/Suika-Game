@@ -634,11 +634,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e02cfbc20adce541a5de8eede622610, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lastCircle: {fileID: 0}
   circlePrefab: {fileID: 439809850155413000, guid: 35c8142614454a6428b2c919fa67123d, type: 3}
   circleGroup: {fileID: 1727604567}
+  circlePool: []
   effectPrefab: {fileID: 4208931625737238254, guid: c65bb98185f52734e8f8229ef268d59f, type: 3}
   effectGroup: {fileID: 851504625}
+  effectPool: []
+  lastCircle: {fileID: 0}
+  poolSize: 10
+  poolCursor: 0
   score: 0
   maxLevel: 2
   isGameOver: 0

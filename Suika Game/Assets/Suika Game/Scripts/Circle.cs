@@ -34,6 +34,25 @@ public class Circle : MonoBehaviour
         anim.SetInteger("Level", level);
     }
 
+    void OnDisable()
+    {
+        // Circle 속성 초기화
+        level = 0;
+        isDrag = false;
+        isMerge = false;
+
+        // Circle Transform 초기화
+        transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.identity;
+        transform.localScale = Vector3.zero;
+
+        // Circle 물리 초기화
+        rigid.simulated = false;
+        rigid.velocity = Vector2.zero;
+        rigid.angularVelocity = 0;
+        circle.enabled = true;
+    }
+
     void Update()
     {
         if (isDrag)
@@ -56,8 +75,8 @@ public class Circle : MonoBehaviour
             }
             transform.position = Vector3.Lerp(transform.position, mousePos, 0.2f); // Vector3.Lerp() : 마우스위치로 천천히 이동
         }
-       
     }
+
     public void Drag()
     {
         isDrag = true;
