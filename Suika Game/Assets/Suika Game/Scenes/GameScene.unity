@@ -637,6 +637,7 @@ MonoBehaviour:
   lastCircle: {fileID: 0}
   circlePrefabs: {fileID: 439809850155413000, guid: 35c8142614454a6428b2c919fa67123d, type: 3}
   circleGroup: {fileID: 1727604567}
+  maxLevel: 2
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
