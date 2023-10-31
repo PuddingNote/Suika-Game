@@ -5,6 +5,7 @@ using UnityEngine;
 public class Circle : MonoBehaviour
 {
     public GameManager gameManager;
+    public ParticleSystem effect;
     public Rigidbody2D rigid;
     public CircleCollider2D circle;
     public Animator anim;
@@ -12,7 +13,7 @@ public class Circle : MonoBehaviour
     public float leftBorder;    // 왼쪽벽
     public float rightBorder;   // 오른쪽벽
 
-    public bool isDrag;         // 
+    public bool isDrag;         // 클릭중일때
     public int level;           // Circle 레벨
 
     public bool isMerge;        // Circle 합치기
@@ -117,6 +118,7 @@ public class Circle : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    // Circle 레벨업 함수
     void LevelUp()
     {
         isMerge = true;
@@ -126,11 +128,13 @@ public class Circle : MonoBehaviour
         StartCoroutine(LevelUpRoutine());
     }
 
+    // Circle 레벨업 코루틴
     IEnumerator LevelUpRoutine()
     {
         yield return new WaitForSeconds(0.2f);
 
         anim.SetInteger("Level", level + 1);
+        EffectPlay();
 
         yield return new WaitForSeconds(0.3f);
         level++;
@@ -138,6 +142,14 @@ public class Circle : MonoBehaviour
         gameManager.maxLevel = Mathf.Max(level, gameManager.maxLevel);
 
         isMerge = false;
+    }
+
+    // 이펙트 실행 함수
+    void EffectPlay()
+    {
+        effect.transform.position = transform.position;
+        effect.transform.localScale = transform.localScale;
+        effect.Play();
     }
 
 }

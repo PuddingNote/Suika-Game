@@ -5,8 +5,10 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public Circle lastCircle;
-    public GameObject circlePrefabs;
+    public GameObject circlePrefab;
     public Transform circleGroup;
+    public GameObject effectPrefab;
+    public Transform effectGroup;
 
     public int maxLevel;
 
@@ -22,8 +24,15 @@ public class GameManager : MonoBehaviour
 
     Circle GetCircle()
     {
-        GameObject instance = Instantiate(circlePrefabs, circleGroup);
-        Circle instanceCircle = instance.GetComponent<Circle>();
+        // Effect 持失
+        GameObject instanceEffectObj = Instantiate(effectPrefab, effectGroup);
+        ParticleSystem instanceEffect = instanceEffectObj.GetComponent<ParticleSystem>();
+
+        // Circle 持失
+        GameObject instanceCircleObj = Instantiate(circlePrefab, circleGroup);
+        Circle instanceCircle = instanceCircleObj.GetComponent<Circle>();
+        instanceCircle.effect = instanceEffect;
+
         return instanceCircle;
     }
 
