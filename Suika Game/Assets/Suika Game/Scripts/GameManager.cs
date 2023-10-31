@@ -1,9 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("--------------[ Main ]")]
+    public int score;               // 점수
+    public int maxLevel;            // Circle 최대 레벨
+    public bool isGameOver;         // GameOver 판단
+
+    [Header("--------------[ Object Pooling ]")]
     public GameObject circlePrefab;
     public Transform circleGroup;
     public List<Circle> circlePool;
@@ -17,9 +25,15 @@ public class GameManager : MonoBehaviour
     public int poolSize;            // 오브젝트풀링 Size
     public int poolCursor;          // 오브젝트풀링 Cursor
 
-    public int score;               // 점수
-    public int maxLevel;            // Circle 최대 레벨
-    public bool isGameOver;         // GameOver 판단
+    [Header("--------------[ UI ]")]
+    public GameObject startGroup;
+    public GameObject endGroup;
+    public Text scoreText;
+    public Text MaxScoreText;
+    public Text SubScoreText;
+
+    [Header("--------------[ ETC ]")]
+    public GameObject mainGameGroup;
 
     void Awake()
     {
@@ -31,11 +45,25 @@ public class GameManager : MonoBehaviour
         {
             MakeCircle();
         }
+
+        // 처음 시작 MaxScore버그 Fix
+        if (!PlayerPrefs.HasKey("MaxScore"))
+        {
+            PlayerPrefs.SetInt("MaxScore", 0);
+        }
+        MaxScoreText.text = PlayerPrefs.GetInt("MaxScore").ToString();  // 데이터 저장을 담당하는 Class
     }
 
-    void Start()
+    public void GameStart()
     {
-        NextCircle();
+        // 오브젝트 활성화
+        mainGameGroup.SetActive(true);
+        scoreText.gameObject.SetActive(true);
+        MaxScoreText.gameObject.SetActive(true);
+        startGroup.SetActive(false);
+
+        // 게임시작 (Circle 생성)
+        Invoke("NextCircle", 1.5f);
     }
 
     Circle MakeCircle()
@@ -141,6 +169,40 @@ public class GameManager : MonoBehaviour
             circles[index].Hide(Vector3.up * 100); // 게임 플레이중에 나올수없는 큰값을 넣어서 숨기기
             yield return new WaitForSeconds(0.1f);
         }
+
+        yield return new WaitForSeconds(1f);
+
+        // 최고 점수 갱신
+        int maxScore = Mathf.Max(score, PlayerPrefs.GetInt("MaxScore"));
+        PlayerPrefs.SetInt("MaxScore", maxScore);
+
+        // 게임오버 UI 표시
+        SubScoreText.text = "Score: " + scoreText.text;
+        endGroup.SetActive(true);
+    }
+
+    public void Reset()
+    {
+        StartCoroutine(ResetCoroutine());
+    }
+
+    IEnumerator ResetCoroutine()
+    {
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene("GameScene");
+    }
+
+    void Update()
+    {
+        if (Input.GetButtonDown("Cancel"))
+        {
+            Application.Quit();
+        }
+    }
+
+    void LateUpdate()
+    {
+        scoreText.text = score.ToString();
     }
 
 }
