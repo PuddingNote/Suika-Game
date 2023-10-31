@@ -10,7 +10,9 @@ public class GameManager : MonoBehaviour
     public GameObject effectPrefab;
     public Transform effectGroup;
 
-    public int maxLevel;
+    public int score;               // 점수
+    public int maxLevel;            // Circle 최대 레벨
+    public bool isGameOver;         // GameOver 판단
 
     void Awake()
     {
@@ -38,13 +40,18 @@ public class GameManager : MonoBehaviour
 
     void NextCircle()
     {
+        if (isGameOver)
+        {
+            return;
+        }
+
         Circle newCircle = GetCircle();
         lastCircle = newCircle;
         lastCircle.gameManager = this;
         lastCircle.level = Random.Range(0, maxLevel);
         lastCircle.gameObject.SetActive(true);
 
-        StartCoroutine("WaitNext"); // WaitNext()로 넣어도됌
+        StartCoroutine(WaitNext());
     }
 
     IEnumerator WaitNext()
@@ -74,6 +81,36 @@ public class GameManager : MonoBehaviour
 
         lastCircle.Drop();
         lastCircle = null;
+    }
+
+    public void GameOver()
+    {
+        if (isGameOver)
+        {
+            return;
+        }
+        isGameOver = true;
+        StartCoroutine(GameOverRoutione());
+    }
+
+    IEnumerator GameOverRoutione()
+    {
+        // 1. 장면 안에 활성화 되어있는 모든 Circle 가져오기
+        Circle[] circles = FindObjectsOfType<Circle>();
+
+        // 2. 지우기 전에 모든 Circle의 물리효과 비활성화
+        for (int index = 0; index < circles.Length; index++)
+        {
+            circles[index].rigid.simulated = false;
+
+        }
+
+        // 3. 1번의 목록을 하나씩 접근해서 지우기
+        for (int index = 0; index < circles.Length; index++)
+        {
+            circles[index].Hide(Vector3.up * 100); // 게임 플레이중에 나올수없는 큰값을 넣어서 숨기기
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
 }

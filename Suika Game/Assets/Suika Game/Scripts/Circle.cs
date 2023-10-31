@@ -9,6 +9,7 @@ public class Circle : MonoBehaviour
     public Rigidbody2D rigid;
     public CircleCollider2D circle;
     public Animator anim;
+    public SpriteRenderer spriteRenderer;
 
     public float leftBorder;    // 왼쪽벽
     public float rightBorder;   // 오른쪽벽
@@ -18,11 +19,14 @@ public class Circle : MonoBehaviour
 
     public bool isMerge;        // Circle 합치기
 
+    public float deadTime;      // 경계선에 걸려있을 수 있는 시간
+
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         circle = GetComponent<CircleCollider2D>();
         anim = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void OnEnable()
@@ -94,25 +98,41 @@ public class Circle : MonoBehaviour
         }
     }
 
-    public void Hide(Vector3 targerPos)
+    public void Hide(Vector3 targetPos)
     {
         isMerge = true;
         rigid.simulated = false;
         circle.enabled = false;
 
-        StartCoroutine(HideRoutine(targerPos));
+        if (targetPos == Vector3.up * 100)
+        {
+            EffectPlay();
+        }
+
+        StartCoroutine(HideRoutine(targetPos));
     }
 
-    IEnumerator HideRoutine(Vector3 targerPos)
+    IEnumerator HideRoutine(Vector3 targetPos)
     {
         int frameCount = 0;
 
         while (frameCount < 20)
         {
             frameCount++;
-            transform.position = Vector3.Lerp(transform.position, targerPos, 0.5f);
+
+            if (targetPos != Vector3.up * 100)
+            {
+                transform.position = Vector3.Lerp(transform.position, targetPos, 0.5f);
+            }
+            else if(targetPos == Vector3.up * 100)
+            {
+                transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, 0.2f);
+            }
+
             yield return null;
         }
+
+        gameManager.score += (int)Mathf.Pow(2, level); // 지정 숫자의 거듭제곱
 
         isMerge = false;
         gameObject.SetActive(false);
@@ -142,6 +162,32 @@ public class Circle : MonoBehaviour
         gameManager.maxLevel = Mathf.Max(level, gameManager.maxLevel);
 
         isMerge = false;
+    }
+
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "Finish")
+        {
+            deadTime += Time.deltaTime;
+
+            if (deadTime > 2)
+            {
+                spriteRenderer.color = Color.red;
+            }
+            if (deadTime > 5)
+            {
+                gameManager.GameOver();
+            }
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Finish")
+        {
+            deadTime = 0;
+            spriteRenderer.color = Color.white;
+        }
     }
 
     // 이펙트 실행 함수
