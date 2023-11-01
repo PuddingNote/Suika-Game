@@ -77,17 +77,20 @@ public class Circle : MonoBehaviour
         }
     }
 
+    // 
     public void Drag()
     {
         isDrag = true;
     }
 
+    // 
     public void Drop()
     {
         isDrag = false;
         rigid.simulated = true;
     }
-
+    
+    // 
     void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Circle")
@@ -117,6 +120,7 @@ public class Circle : MonoBehaviour
         }
     }
 
+    // 
     public void Hide(Vector3 targetPos)
     {
         isMerge = true;
@@ -131,6 +135,7 @@ public class Circle : MonoBehaviour
         StartCoroutine(HideRoutine(targetPos));
     }
 
+    // 
     IEnumerator HideRoutine(Vector3 targetPos)
     {
         int frameCount = 0;
@@ -183,6 +188,7 @@ public class Circle : MonoBehaviour
         isMerge = false;
     }
 
+    // 
     void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "Finish")
@@ -200,6 +206,7 @@ public class Circle : MonoBehaviour
         }
     }
 
+    // 
     void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "Finish")

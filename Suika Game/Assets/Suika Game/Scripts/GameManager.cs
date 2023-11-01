@@ -20,10 +20,10 @@ public class GameManager : MonoBehaviour
     public Transform effectGroup;
     public List<ParticleSystem> effectPool;
 
-    public Circle lastCircle;
+    public Circle lastCircle;       
     [Range(1, 30)]
-    public int poolSize;            // 오브젝트풀링 Size
-    public int poolCursor;          // 오브젝트풀링 Cursor
+    public int poolSize;            // Size
+    public int poolCursor;          // Cursor
 
     [Header("--------------[ UI ]")]
     public GameObject startGroup;
@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour
         Invoke("NextCircle", 1.5f);
     }
 
+    // Circle 생성 함수
     Circle MakeCircle()
     {
         // Effect 생성
@@ -85,6 +86,7 @@ public class GameManager : MonoBehaviour
         return instanceCircle;
     }
 
+    // 
     Circle GetCircle()
     {
         for (int index = 0; index < circlePool.Count; index++)
@@ -99,6 +101,7 @@ public class GameManager : MonoBehaviour
         return MakeCircle();
     }
 
+    // 
     void NextCircle()
     {
         if (isGameOver)
@@ -113,6 +116,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(WaitNext());
     }
 
+    // 
     IEnumerator WaitNext()
     {
         while (lastCircle != null)
@@ -124,6 +128,7 @@ public class GameManager : MonoBehaviour
         NextCircle();
     }
 
+    // 
     public void TouchDown()
     {
         if (lastCircle == null) 
@@ -132,6 +137,7 @@ public class GameManager : MonoBehaviour
         lastCircle.Drag();
     }
 
+    // 
     public void TouchUp()
     {
         if (lastCircle == null)
@@ -141,6 +147,7 @@ public class GameManager : MonoBehaviour
         lastCircle = null;
     }
 
+    // 
     public void GameOver()
     {
         if (isGameOver)
@@ -151,6 +158,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(GameOverRoutione());
     }
 
+    // 
     IEnumerator GameOverRoutione()
     {
         // 1. 장면 안에 활성화 되어있는 모든 Circle 가져오기
@@ -181,25 +189,29 @@ public class GameManager : MonoBehaviour
         endGroup.SetActive(true);
     }
 
+    // 
     public void Reset()
     {
         StartCoroutine(ResetCoroutine());
     }
 
+    // 
     IEnumerator ResetCoroutine()
     {
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene("GameScene");
     }
 
-    void Update()
-    {
-        if (Input.GetButtonDown("Cancel"))
-        {
-            Application.Quit();
-        }
-    }
+    // 모바일 Quit 버튼
+    //void Update()
+    //{
+    //    if (Input.GetButtonDown("Cancel"))
+    //    {
+    //        Application.Quit();
+    //    }
+    //}
 
+    // 
     void LateUpdate()
     {
         scoreText.text = score.ToString();
