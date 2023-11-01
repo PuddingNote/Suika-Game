@@ -73,7 +73,7 @@ public class Circle : MonoBehaviour
             {
                 mousePos.x = rightBorder;
             }
-            transform.position = Vector3.Lerp(transform.position, mousePos, 0.2f); // Vector3.Lerp() : 마우스위치로 천천히 이동
+            transform.position = Vector3.Lerp(transform.position, mousePos, 0.8f); // Vector3.Lerp() : 마우스위치로 천천히 이동
         }
     }
 
@@ -98,7 +98,7 @@ public class Circle : MonoBehaviour
             Circle otherCircle = collision.gameObject.GetComponent<Circle>();
 
             // Circle 합치기
-            if (level == otherCircle.level && !isMerge && !otherCircle.isMerge && level < 7)
+            if (level == otherCircle.level && !isMerge && !otherCircle.isMerge && level < 9)
             {
                 // 나와 상대편 위치 가져오기
                 float meX = transform.position.x;

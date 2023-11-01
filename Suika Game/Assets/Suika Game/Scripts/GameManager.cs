@@ -28,9 +28,11 @@ public class GameManager : MonoBehaviour
     [Header("--------------[ UI ]")]
     public GameObject startGroup;
     public GameObject endGroup;
+    public GameObject circularGroup;
     public Text scoreText;
-    public Text MaxScoreText;
-    public Text SubScoreText;
+    public Text bestScoreText;
+    public Text maxScoreText;
+    public Text subScoreText;
 
     [Header("--------------[ ETC ]")]
     public GameObject mainGameGroup;
@@ -51,7 +53,7 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("MaxScore", 0);
         }
-        MaxScoreText.text = PlayerPrefs.GetInt("MaxScore").ToString();  // 데이터 저장을 담당하는 Class
+        maxScoreText.text = PlayerPrefs.GetInt("MaxScore").ToString();  // 데이터 저장을 담당하는 Class
     }
 
     public void GameStart()
@@ -59,8 +61,10 @@ public class GameManager : MonoBehaviour
         // 오브젝트 활성화
         mainGameGroup.SetActive(true);
         scoreText.gameObject.SetActive(true);
-        MaxScoreText.gameObject.SetActive(true);
+        bestScoreText.gameObject.SetActive(true);
+        maxScoreText.gameObject.SetActive(true);
         startGroup.SetActive(false);
+        circularGroup.SetActive(true);
 
         // 게임시작 (Circle 생성)
         Invoke("NextCircle", 1.5f);
@@ -185,7 +189,7 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("MaxScore", maxScore);
 
         // 게임오버 UI 표시
-        SubScoreText.text = "Score: " + scoreText.text;
+        subScoreText.text = "Score: " + scoreText.text;
         endGroup.SetActive(true);
     }
 
