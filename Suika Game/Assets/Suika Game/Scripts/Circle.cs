@@ -21,12 +21,15 @@ public class Circle : MonoBehaviour
 
     public float deadTime;      // 경계선에 걸려있을 수 있는 시간
 
+    public GameObject dropLine;
+
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         circle = GetComponent<CircleCollider2D>();
         anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        dropLine = transform.GetChild(0).gameObject;
     }
 
     void OnEnable()
@@ -88,6 +91,7 @@ public class Circle : MonoBehaviour
     {
         isDrag = false;
         rigid.simulated = true;
+        dropLine.SetActive(false);
     }
     
     // 

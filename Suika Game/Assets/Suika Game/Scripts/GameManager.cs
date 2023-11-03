@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
     [Header("--------------[ Main ]")]
     public int score;               // 점수
-    public int maxLevel;            // Circle 최대 레벨
+    public int maxLevel = 1;            // Circle 최대 레벨
     public bool isGameOver;         // GameOver 판단
 
     [Header("--------------[ Object Pooling ]")]
@@ -114,7 +114,14 @@ public class GameManager : MonoBehaviour
         }
 
         lastCircle = GetCircle();
-        lastCircle.level = Random.Range(0, maxLevel);
+        if (maxLevel < 4)
+        {
+            lastCircle.level = Random.Range(0, maxLevel);
+        }
+        else
+        {
+            lastCircle.level = Random.Range(0, 5);
+        }
         lastCircle.gameObject.SetActive(true);
 
         StartCoroutine(WaitNext());
