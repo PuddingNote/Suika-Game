@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Suika Game/Scenes/TitleScene.unity
+    guid: 5843d5ae36902cf47882b20157c205ba
+  - enabled: 1
     path: Assets/Suika Game/Scenes/GameScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}
