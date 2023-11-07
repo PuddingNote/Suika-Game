@@ -1175,7 +1175,7 @@ MonoBehaviour:
   effectGroup: {fileID: 851504625}
   effectPool: []
   lastCircle: {fileID: 0}
-  poolSize: 10
+  poolSize: 5
   poolCursor: 0
   startGroup: {fileID: 9751179}
   endGroup: {fileID: 782920211}

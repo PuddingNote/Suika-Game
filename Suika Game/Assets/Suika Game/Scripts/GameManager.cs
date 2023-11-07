@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
     [Header("--------------[ Main ]")]
     public int score;               // 점수
-    public int maxLevel = 1;            // Circle 최대 레벨
+    public int maxLevel = 1;        // Circle 최대 레벨
     public bool isGameOver;         // GameOver 판단
 
     [Header("--------------[ Object Pooling ]")]
@@ -122,9 +122,20 @@ public class GameManager : MonoBehaviour
         {
             lastCircle.level = Random.Range(0, 5);
         }
-        lastCircle.gameObject.SetActive(true);
+        SetActiveRecursively(lastCircle.gameObject, true);
 
         StartCoroutine(WaitNext());
+    }
+
+    // 해당 Object및 모든 하위 자식오브젝트들을 재귀적으로 활성화 (DropLine 활성화할때 사용)
+    void SetActiveRecursively(GameObject obj, bool state)
+    {
+        obj.SetActive(state);
+
+        foreach (Transform child in obj.transform)
+        {
+            SetActiveRecursively(child.gameObject, state);
+        }
     }
 
     // 
@@ -172,17 +183,17 @@ public class GameManager : MonoBehaviour
     // 
     IEnumerator GameOverRoutione()
     {
-        // 1. 장면 안에 활성화 되어있는 모든 Circle 가져오기
+        // 장면 안에 활성화 되어있는 모든 Circle 가져오기
         Circle[] circles = FindObjectsOfType<Circle>();
 
-        // 2. 지우기 전에 모든 Circle의 물리효과 비활성화
+        // 지우기 전에 모든 Circle의 물리효과 비활성화
         for (int index = 0; index < circles.Length; index++)
         {
             circles[index].rigid.simulated = false;
 
         }
 
-        // 3. 1번의 목록을 하나씩 접근해서 지우기
+        // circles 목록을 하나씩 접근해서 지우기
         for (int index = 0; index < circles.Length; index++)
         {
             circles[index].Hide(Vector3.up * 100); // 게임 플레이중에 나올수없는 큰값을 넣어서 숨기기

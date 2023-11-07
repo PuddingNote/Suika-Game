@@ -93,7 +93,7 @@ public class Circle : MonoBehaviour
         rigid.simulated = true;
         dropLine.SetActive(false);
     }
-    
+
     // 
     void OnCollisionStay2D(Collision2D collision)
     {
@@ -136,7 +136,11 @@ public class Circle : MonoBehaviour
             EffectPlay();
         }
 
-        StartCoroutine(HideRoutine(targetPos));
+        if (this.gameObject.activeInHierarchy)
+        {
+            StartCoroutine(HideRoutine(targetPos));
+        }
+
     }
 
     // 
