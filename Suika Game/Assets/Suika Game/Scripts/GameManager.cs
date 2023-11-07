@@ -26,16 +26,10 @@ public class GameManager : MonoBehaviour
     public int poolCursor;          // Cursor
 
     [Header("--------------[ UI ]")]
-    public GameObject startGroup;
     public GameObject endGroup;
-    public GameObject circularGroup;
     public Text scoreText;
-    public Text bestScoreText;
     public Text maxScoreText;
     public Text subScoreText;
-
-    [Header("--------------[ ETC ]")]
-    public GameObject mainGameGroup;
 
     void Awake()
     {
@@ -54,20 +48,16 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("MaxScore", 0);
         }
         maxScoreText.text = PlayerPrefs.GetInt("MaxScore").ToString();  // 데이터 저장을 담당하는 Class
-    }
-
-    public void GameStart()
-    {
-        // 오브젝트 활성화
-        mainGameGroup.SetActive(true);
-        scoreText.gameObject.SetActive(true);
-        bestScoreText.gameObject.SetActive(true);
-        maxScoreText.gameObject.SetActive(true);
-        startGroup.SetActive(false);
-        circularGroup.SetActive(true);
 
         // 게임시작 (Circle 생성)
-        Invoke("NextCircle", 1.5f);
+        StartCoroutine(GameStart());
+    }
+
+    IEnumerator GameStart()
+    {
+        yield return new WaitForSeconds(1.0f);
+
+        NextCircle();
     }
 
     // Circle 생성 함수
@@ -220,18 +210,18 @@ public class GameManager : MonoBehaviour
     // 
     IEnumerator ResetCoroutine()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         SceneManager.LoadScene("GameScene");
     }
 
     // 모바일 Quit 버튼
-    //void Update()
-    //{
-    //    if (Input.GetButtonDown("Cancel"))
-    //    {
-    //        Application.Quit();
-    //    }
-    //}
+    void Update()
+    {
+        if (Input.GetButtonDown("Cancel"))
+        {
+            Application.Quit();
+        }
+    }
 
     // 
     void LateUpdate()

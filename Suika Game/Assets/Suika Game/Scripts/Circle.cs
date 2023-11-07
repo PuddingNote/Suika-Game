@@ -11,6 +11,8 @@ public class Circle : MonoBehaviour
     public Animator anim;
     public SpriteRenderer spriteRenderer;
 
+    public GameObject dropLine; // 
+
     public float leftBorder;    // 왼쪽벽
     public float rightBorder;   // 오른쪽벽
 
@@ -21,8 +23,6 @@ public class Circle : MonoBehaviour
 
     public float deadTime;      // 경계선에 걸려있을 수 있는 시간
 
-    public GameObject dropLine;
-
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -32,11 +32,13 @@ public class Circle : MonoBehaviour
         dropLine = transform.GetChild(0).gameObject;
     }
 
+    // 
     void OnEnable()
     {
         anim.SetInteger("Level", level);
     }
 
+    // 
     void OnDisable()
     {
         // Circle 속성 초기화
