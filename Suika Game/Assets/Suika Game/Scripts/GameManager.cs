@@ -31,7 +31,11 @@ public class GameManager : MonoBehaviour
     public Text maxScoreText;
     public Text subScoreText;
 
-    void Awake()
+    //[Header("--------------[ TEST ]")]
+
+
+
+    public void Awake()
     {
         Application.targetFrameRate = 60;   // 프레임 설정
         circlePool = new List<Circle>();
@@ -61,7 +65,7 @@ public class GameManager : MonoBehaviour
     }
 
     // Circle 생성 함수
-    Circle MakeCircle()
+    public Circle MakeCircle()
     {
         // Effect 생성
         GameObject instanceEffectObj = Instantiate(effectPrefab, effectGroup);
@@ -81,7 +85,7 @@ public class GameManager : MonoBehaviour
     }
 
     // 
-    Circle GetCircle()
+    public Circle GetCircle()
     {
         for (int index = 0; index < circlePool.Count; index++)
         {
@@ -96,7 +100,7 @@ public class GameManager : MonoBehaviour
     }
 
     // 
-    void NextCircle()
+    public void NextCircle()
     {
         if (isGameOver)
         {
@@ -118,7 +122,7 @@ public class GameManager : MonoBehaviour
     }
 
     // 해당 Object및 모든 하위 자식오브젝트들을 재귀적으로 활성화 (DropLine 활성화할때 사용)
-    void SetActiveRecursively(GameObject obj, bool state)
+    public void SetActiveRecursively(GameObject obj, bool state)
     {
         obj.SetActive(state);
 
@@ -215,7 +219,7 @@ public class GameManager : MonoBehaviour
     }
 
     // 모바일 Quit 버튼
-    void Update()
+    public void Update()
     {
         if (Input.GetButtonDown("Cancel"))
         {
@@ -224,7 +228,7 @@ public class GameManager : MonoBehaviour
     }
 
     // 
-    void LateUpdate()
+    public void LateUpdate()
     {
         scoreText.text = score.ToString();
     }

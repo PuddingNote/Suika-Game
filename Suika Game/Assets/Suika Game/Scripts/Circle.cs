@@ -23,7 +23,7 @@ public class Circle : MonoBehaviour
 
     public float deadTime;      // 경계선에 걸려있을 수 있는 시간
 
-    void Awake()
+    public void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         circle = GetComponent<CircleCollider2D>();
@@ -33,13 +33,13 @@ public class Circle : MonoBehaviour
     }
 
     // 
-    void OnEnable()
+    public void OnEnable()
     {
         anim.SetInteger("Level", level);
     }
 
     // 
-    void OnDisable()
+    public void OnDisable()
     {
         // Circle 속성 초기화
         level = 0;
@@ -58,7 +58,7 @@ public class Circle : MonoBehaviour
         circle.enabled = true;
     }
 
-    void Update()
+    public void Update()
     {
         if (isDrag)
         {
@@ -97,7 +97,7 @@ public class Circle : MonoBehaviour
     }
 
     // 
-    void OnCollisionStay2D(Collision2D collision)
+    public void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Circle")
         {
@@ -173,7 +173,7 @@ public class Circle : MonoBehaviour
     }
 
     // Circle 레벨업 함수
-    void LevelUp()
+    public void LevelUp()
     {
         isMerge = true;
         rigid.velocity = Vector2.zero;  // 물리속도 제거
@@ -199,7 +199,7 @@ public class Circle : MonoBehaviour
     }
 
     // 
-    void OnTriggerStay2D(Collider2D collision)
+    public void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "Finish")
         {
@@ -217,7 +217,7 @@ public class Circle : MonoBehaviour
     }
 
     // 
-    void OnTriggerExit2D(Collider2D collision)
+    public void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "Finish")
         {
@@ -227,7 +227,7 @@ public class Circle : MonoBehaviour
     }
 
     // 이펙트 실행 함수
-    void EffectPlay()
+    public void EffectPlay()
     {
         effect.transform.position = transform.position;
         effect.transform.localScale = transform.localScale;
