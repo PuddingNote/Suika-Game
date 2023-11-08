@@ -20,8 +20,8 @@ public class GameManager : MonoBehaviour
     public Transform effectGroup;
     public List<ParticleSystem> effectPool;
 
-    public Circle lastCircle;       
-    [Range(1, 30)]
+    public Circle currentCircle;       
+    [Range(1, 40)]
     public int poolSize;            // Size
     public int poolCursor;          // Cursor
 
@@ -31,16 +31,18 @@ public class GameManager : MonoBehaviour
     public Text maxScoreText;
     public Text subScoreText;
 
-    //[Header("--------------[ TEST ]")]
-
-
+    [Header("--------------[ Next Circle ]")]
+    public Circle nextCircle;
+    public Sprite[] circleSprites;
+    public SpriteRenderer nextCircleImage;
 
     public void Awake()
     {
         Application.targetFrameRate = 60;   // 프레임 설정
         circlePool = new List<Circle>();
         effectPool = new List<ParticleSystem>();
-
+        nextCircleImage = GameObject.Find("NextCircle").GetComponent<SpriteRenderer>();
+        
         for (int index = 0; index < poolSize; index++)
         {
             MakeCircle();
@@ -57,11 +59,12 @@ public class GameManager : MonoBehaviour
         StartCoroutine(GameStart());
     }
 
+    // 
     IEnumerator GameStart()
     {
         yield return new WaitForSeconds(1.0f);
 
-        NextCircle();
+        FirstCircle();
     }
 
     // Circle 생성 함수
@@ -100,6 +103,21 @@ public class GameManager : MonoBehaviour
     }
 
     // 
+    public void FirstCircle()
+    {
+        currentCircle = GetCircle();
+        nextCircle = GetCircle();
+
+        currentCircle.level = Random.Range(0, 1);
+        nextCircle.level = Random.Range(0, 1);
+
+        nextCircleImage.sprite = circleSprites[nextCircle.level];
+        SetActiveRecursively(currentCircle.gameObject, true);
+        
+        StartCoroutine(WaitNext());
+    }
+
+    // 
     public void NextCircle()
     {
         if (isGameOver)
@@ -107,16 +125,18 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        lastCircle = GetCircle();
+        currentCircle = nextCircle;
+        nextCircle = GetCircle();
         if (maxLevel < 4)
         {
-            lastCircle.level = Random.Range(0, maxLevel);
+            nextCircle.level = Random.Range(0, maxLevel);
         }
         else
         {
-            lastCircle.level = Random.Range(0, 5);
+            nextCircle.level = Random.Range(0, 5);
         }
-        SetActiveRecursively(lastCircle.gameObject, true);
+        nextCircleImage.sprite = circleSprites[nextCircle.level];
+        SetActiveRecursively(currentCircle.gameObject, true);
 
         StartCoroutine(WaitNext());
     }
@@ -135,7 +155,7 @@ public class GameManager : MonoBehaviour
     // 
     IEnumerator WaitNext()
     {
-        while (lastCircle != null)
+        while (currentCircle != null)
         {
             yield return null;
         }
@@ -147,20 +167,20 @@ public class GameManager : MonoBehaviour
     // 
     public void TouchDown()
     {
-        if (lastCircle == null) 
+        if (currentCircle == null) 
             return;
 
-        lastCircle.Drag();
+        currentCircle.Drag();
     }
 
     // 
     public void TouchUp()
     {
-        if (lastCircle == null)
+        if (currentCircle == null)
             return;
 
-        lastCircle.Drop();
-        lastCircle = null;
+        currentCircle.Drop();
+        currentCircle = null;
     }
 
     // 
