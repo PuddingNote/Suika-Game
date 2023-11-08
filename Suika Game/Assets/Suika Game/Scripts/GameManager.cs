@@ -108,8 +108,8 @@ public class GameManager : MonoBehaviour
         currentCircle = GetCircle();
         nextCircle = GetCircle();
 
-        currentCircle.level = Random.Range(0, 1);
-        nextCircle.level = Random.Range(0, 1);
+        currentCircle.level = Random.Range(0, 2);
+        nextCircle.level = Random.Range(0, 2);
 
         nextCircleImage.sprite = circleSprites[nextCircle.level];
         SetActiveRecursively(currentCircle.gameObject, true);
