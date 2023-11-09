@@ -13,7 +13,8 @@ public class Circle : MonoBehaviour
     public SpriteRenderer spriteRenderer;
 
     [Header("--------------[ DropLine ]")]
-    public GameObject dropLine; // 떨어지는 라인 표시
+    public GameObject dropLine;
+    public GameObject childPrefab;
 
     [Header("--------------[ Circle ]")]
     public float leftBorder;    // 왼쪽벽
@@ -32,7 +33,12 @@ public class Circle : MonoBehaviour
         circle = GetComponent<CircleCollider2D>();
         anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        dropLine = transform.GetChild(0).gameObject;
+
+        childPrefab = Resources.Load<GameObject>("Prefabs/DropLine");
+        dropLine = Instantiate(childPrefab);
+        dropLine.transform.SetParent(this.gameObject.transform, false);
+        //dropLine.transform.parent = this.transform;
+        //dropLine.transform.localScale = new Vector3(0.1f, 16f, 0f);
     }
 
     public void OnEnable()
