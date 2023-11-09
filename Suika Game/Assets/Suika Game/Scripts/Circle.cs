@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Circle : MonoBehaviour
 {
+    [Header("--------------[ Main ]")]
     public GameManager gameManager;
     public ParticleSystem effect;
     public Rigidbody2D rigid;
@@ -11,8 +12,10 @@ public class Circle : MonoBehaviour
     public Animator anim;
     public SpriteRenderer spriteRenderer;
 
-    public GameObject dropLine; // 
+    [Header("--------------[ DropLine ]")]
+    public GameObject dropLine; // 떨어지는 라인 표시
 
+    [Header("--------------[ Circle ]")]
     public float leftBorder;    // 왼쪽벽
     public float rightBorder;   // 오른쪽벽
 
@@ -32,13 +35,11 @@ public class Circle : MonoBehaviour
         dropLine = transform.GetChild(0).gameObject;
     }
 
-    // 
     public void OnEnable()
     {
         anim.SetInteger("Level", level);
     }
 
-    // 
     public void OnDisable()
     {
         // Circle 속성 초기화
@@ -82,13 +83,13 @@ public class Circle : MonoBehaviour
         }
     }
 
-    // 
+    // 클릭중 O (터치중 0)
     public void Drag()
     {
         isDrag = true;
     }
 
-    // 
+    // 클릭중 X (터치중 X)
     public void Drop()
     {
         isDrag = false;
@@ -96,7 +97,6 @@ public class Circle : MonoBehaviour
         dropLine.SetActive(false);
     }
 
-    // 
     public void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Circle")
@@ -112,8 +112,7 @@ public class Circle : MonoBehaviour
                 float otherX = otherCircle.transform.position.x;
                 float otherY = otherCircle.transform.position.y;
 
-                // 1. 내가 아래에 있을 때
-                // 2. 동일한 높이일 때, 내가 오른쪽에 있을때
+                // 내가 아래에 있을 때, 동일한 높이일 때, 내가 오른쪽에 있을때
                 if (meY < otherY || (meY == otherY && meY > otherX))
                 {
                     // 상대방은 숨기기
@@ -126,7 +125,7 @@ public class Circle : MonoBehaviour
         }
     }
 
-    // 
+    // 합쳤을때 숨겨지는 함수
     public void Hide(Vector3 targetPos)
     {
         isMerge = true;
@@ -145,7 +144,7 @@ public class Circle : MonoBehaviour
 
     }
 
-    // 
+    // Circle 숨기기 코루틴
     IEnumerator HideRoutine(Vector3 targetPos)
     {
         int frameCount = 0;
@@ -198,7 +197,6 @@ public class Circle : MonoBehaviour
         isMerge = false;
     }
 
-    // 
     public void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "Finish")
@@ -216,7 +214,6 @@ public class Circle : MonoBehaviour
         }
     }
 
-    // 
     public void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "Finish")
