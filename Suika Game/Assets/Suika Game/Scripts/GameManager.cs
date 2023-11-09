@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
     public Text maxScoreText;
     public Text subScoreText;
 
+    [field: SerializeField] public int a { get; private set; }
     public void Awake()
     {
         Application.targetFrameRate = 60;   // 프레임 설정
