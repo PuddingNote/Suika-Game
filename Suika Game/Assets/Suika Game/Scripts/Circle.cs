@@ -69,7 +69,7 @@ public class Circle : MonoBehaviour
     {
         if (isDrag)
         {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); // 스크린 좌표계에있는 Vector값을 월드 좌표게로 바꿔준다.
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); // 스크린 좌표계에있는 Vector값을 월드 좌표계로 바꿔준다.
             mousePos.y = 4.25f;
             mousePos.z = 0;
 
@@ -147,7 +147,6 @@ public class Circle : MonoBehaviour
         {
             StartCoroutine(HideRoutine(targetPos));
         }
-
     }
 
     // Circle 숨기기 코루틴

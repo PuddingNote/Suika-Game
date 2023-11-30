@@ -211,7 +211,6 @@ public class GameManager : MonoBehaviour
         for (int index = 0; index < circles.Length; index++)
         {
             circles[index].rigid.simulated = false;
-
         }
 
         // circles 목록을 하나씩 접근해서 지우기
