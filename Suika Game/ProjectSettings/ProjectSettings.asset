@@ -905,11 +905,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: edcb64bd-f364-475d-8ab2-cba1e9b222c3
+  cloudProjectId: 236dc8b2-e20b-411a-bb4e-96453be46638
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Suika Game (1)
-  organizationId: sharkcoffee
+  projectName: SuikaGame
+  organizationId: bouncy-pudding
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 
