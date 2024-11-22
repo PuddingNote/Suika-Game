@@ -75,6 +75,7 @@
 [2024-11-22]
 - Update TItleScene UI
 - Build Test
+- 코드 정리
 </br>
 
 
