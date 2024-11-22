@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Circle : MonoBehaviour
@@ -37,8 +36,6 @@ public class Circle : MonoBehaviour
         childPrefab = Resources.Load<GameObject>("Prefabs/DropLine");
         dropLine = Instantiate(childPrefab);
         dropLine.transform.SetParent(this.gameObject.transform, false);
-        //dropLine.transform.parent = this.transform;
-        //dropLine.transform.localScale = new Vector3(0.1f, 16f, 0f);
     }
 
     public void OnEnable()
@@ -69,7 +66,7 @@ public class Circle : MonoBehaviour
     {
         if (isDrag)
         {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); // 스크린 좌표계에있는 Vector값을 월드 좌표계로 바꿔준다.
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.y = 4.25f;
             mousePos.z = 0;
 
@@ -85,7 +82,7 @@ public class Circle : MonoBehaviour
             {
                 mousePos.x = rightBorder;
             }
-            transform.position = Vector3.Lerp(transform.position, mousePos, 0.8f); // Vector3.Lerp() : 마우스위치로 천천히 이동
+            transform.position = Vector3.Lerp(transform.position, mousePos, 0.8f);
         }
     }
 
@@ -121,10 +118,8 @@ public class Circle : MonoBehaviour
                 // 내가 아래에 있을 때, 동일한 높이일 때, 내가 오른쪽에 있을때
                 if (meY < otherY || (meY == otherY && meY > otherX))
                 {
-                    // 상대방은 숨기기
                     otherCircle.Hide(transform.position);
 
-                    // 나는 레벨업
                     LevelUp();
                 }
             }
@@ -162,7 +157,7 @@ public class Circle : MonoBehaviour
             {
                 transform.position = Vector3.Lerp(transform.position, targetPos, 0.5f);
             }
-            else if(targetPos == Vector3.up * 100)
+            else if (targetPos == Vector3.up * 100)
             {
                 transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, 0.2f);
             }

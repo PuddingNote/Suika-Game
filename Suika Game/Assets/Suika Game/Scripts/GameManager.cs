@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
 
         nextCircleImage.sprite = circleSprites[nextCircle.level];
         SetActiveRecursively(currentCircle.gameObject, true);
-        
+
         StartCoroutine(WaitNext());
     }
 
@@ -174,7 +174,7 @@ public class GameManager : MonoBehaviour
     // 클릭중 O (터치중 O)
     public void TouchDown()
     {
-        if (currentCircle == null) 
+        if (currentCircle == null)
             return;
 
         currentCircle.Drag();
