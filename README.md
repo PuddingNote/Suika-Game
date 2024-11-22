@@ -1,8 +1,10 @@
 # Suika-Game
 수박게임
 
-
-
+<img src="https://github.com/user-attachments/assets/bd980423-7e0a-4785-9cf1-01413a327098" width="187"></img>
+<img src="https://github.com/user-attachments/assets/7e51723b-128b-4694-838f-2b4be5265b2a" width="187"></img>
+<img src="https://github.com/user-attachments/assets/df63a9a3-53cc-4205-b21a-7cccb259787f" width="187"></img>
+<img src="https://github.com/user-attachments/assets/f69dcdcd-9bb6-47bd-a89a-dc3780b2a384" width="187"></img>
 </br>
 
 [2023-10-31]
