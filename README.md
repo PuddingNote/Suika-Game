@@ -76,6 +76,7 @@
 - Update TItleScene UI
 - Build Test
 - 코드 정리
+- 1차 제작 완료
 </br>
 
 
