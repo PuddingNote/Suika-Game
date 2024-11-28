@@ -1,5 +1,4 @@
 # Suika-Game
-수박게임
 
 <img src="https://github.com/user-attachments/assets/bd980423-7e0a-4785-9cf1-01413a327098" width="187"></img>
 <img src="https://github.com/user-attachments/assets/7e51723b-128b-4694-838f-2b4be5265b2a" width="187"></img>
@@ -7,6 +6,17 @@
 <img src="https://github.com/user-attachments/assets/f69dcdcd-9bb6-47bd-a89a-dc3780b2a384" width="187"></img>
 </br>
 
+## 1. 게임 메커니즘
+  - 위에서 과일이 생성되며, 드래그하여 특정위치에 내려 놓아 같은 종류의 과일끼리 부딫히면 합쳐져 더 큰 과일로 성장
+  - 과일의 크기는 순서대로 커지며, 최종적으로 "수박"까지 합치며 고득점을 얻는 게임
+## 2. 주요 목표
+  - 주어진 제한된 공간에서 가능한 한 많은 과일을 합쳐 높은 점수를 기록
+## 3. 개발 환경
+  - Unity, C#
+
+</br>
+
+## 개발 일지
 [2023-10-31]
 - Project Setting
 - Add Circle
